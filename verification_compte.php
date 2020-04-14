@@ -6,95 +6,239 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
+	<?php
+	$mail_vide=0;
+	$erreur_mail=0;
+	if(empty($_POST["email"])){
+		$mail_vide=1;
+	}else{
+		try
+		{
+			$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
+		}
+		catch (Exception $e)
+		{
+		        die('Erreur : ' . $e->getMessage());
+		}
+		$reponse=$bdd->query('SELECT EmailECE
+								FROM acheteur'
+							) or die(print_r($bdd->errorInfo()));
+		while($donnees=$reponse->fetch()){
+			if($donnees["EmailECE"]==$_POST["email"]){
+				$erreur_mail=1;
+			}
+		}
+		$reponse->closeCursor();
+		$reponse_2=$bdd->query('SELECT EmailECE
+								FROM vendeur'
+							) or die(print_r($bdd->errorInfo()));
+		while($donnees_2=$reponse_2->fetch()){
+			if($donnees_2["EmailECE"]==$_POST["email"]){
+				$erreur_mail=1;
+			}
+		}
+		$reponse_2->closeCursor();
+		$reponse_3=$bdd->query('SELECT EmailECE
+								FROM admin'
+							) or die(print_r($bdd->errorInfo()));
+		while($donnees_3=$reponse_3->fetch()){
+			if($donnees_3["EmailECE"]==$_POST["email"]){
+				$erreur_mail=1;
+			}
+		}
+		$reponse_3->closeCursor();	
+	}
+
+
+		$nom_vide=0;
+		if(empty($_POST["nom"])){
+			$nom_vide=1;
+		}	
+
+		$prenom_vide=0;
+		if(empty($_POST["prenom"])){
+			$prenom_vide=1;
+		}
+		
+		$mdp_vide=0;
+		if(empty($_POST["mdp"])){
+			$mdp_vide=1;
+		}
+
+		$confirm_mdp_vide=0;
+		$erreur_confirm_mdp=0;
+		if(empty($_POST["confirm_mdp"])){
+			$confirm_mdp_vide=1;
+		}else{
+			if(empty($_POST["mdp"])){
+
+			}else{
+				if($_POST["mdp"]!=$_POST["confirm_mdp"]){
+					$erreur_confirm_mdp=1;
+				}
+			}
+		}
+
+		$photo_profil_vide=0;
+		$fond_vide=0;
+		if (empty($_POST["choix_vendeur"])) {
+			
+		}else{
+			if(empty($_POST["photo_profil"])){
+				$photo_profil_vide=1;
+			}
+			if(empty($_POST["image_fond"])){
+				$fond_vide=1;
+			}
+			if(empty($_POST["pseudo"])){
+				$pseudo_vide=1;
+			}
+		}
+
+		$erreur_pseudo=0;
+		$pseudo_vide=0;
+		if (empty($_POST["choix_vendeur"])){
+
+		}else{
+			if(empty($_POST["pseudo"])){
+				$pseudo_vide=1;
+			}else{
+				try
+				{
+					$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
+				}
+				catch (Exception $e)
+				{
+				        die('Erreur : ' . $e->getMessage());
+				}
+				$reponse=$bdd->query('SELECT Pseudo
+										FROM vendeur'
+									) or die(print_r($bdd->errorInfo()));
+				while($donnees=$reponse->fetch()){
+					if($donnees["Pseudo"]==$_POST["pseudo"]){
+						$erreur_pseudo=1;
+					}
+				}
+				$reponse->closeCursor();
+			}	
+		}
+
+		$code_p_vide=0;
+		$adresse_vide=0;
+		$ville_vide=0;
+		$num_vide=0;
+		if (empty($_POST["choix_acheteur"])) {
+						
+		}else{
+			if(empty($_POST["code_p"])){
+				$code_p_vide=1;
+			}
+			if(empty($_POST["adresse_1"])){
+				$adresse_vide=1;
+			}
+			if(empty($_POST["ville"])){
+				$ville_vide=1;
+			}
+			if(empty($_POST["num"])){
+				$num_vide=1;
+			}
+		}
+
+
+		if($mail_vide==0&&$erreur_mail==0&&$nom_vide==0&&$prenom_vide==0&&$mdp_vide==0&&$confirm_mdp_vide==0&&$erreur_confirm_mdp==0&&$photo_profil_vide==0&&$fond_vide==0&&$pseudo_vide==0&&$erreur_pseudo==0&&$code_p_vide==0&&$adresse_vide==0&&$ville_vide==0&&$num_vide==0){
+			try
+			{
+				$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
+			}
+			catch (Exception $e)
+			{
+			        die('Erreur : ' . $e->getMessage());
+			}
+			if(empty($_POST["choix_vendeur"])){
+				$bdd->query("INSERT INTO acheteur
+							 VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['mdp']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['num']}');"
+								) or die(print_r($bdd->errorInfo()));
+
+			}
+			elseif(empty($_POST["choix_acheteur"])){
+				$bdd->query("INSERT INTO vendeur
+									  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['photo_profil']}','{$_POST['image_fond']}','{$_POST['mdp']}');"
+								) or die(print_r($bdd->errorInfo()));
+			}
+			else{
+				$bdd->query("INSERT INTO vendeur
+									  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['photo_profil']}','{$_POST['image_fond']}','{$_POST['mdp']}');"
+								) or die(print_r($bdd->errorInfo()));
+				$bdd->query("INSERT INTO acheteur
+									  VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['mdp']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['num']}');"
+								) or die(print_r($bdd->errorInfo()));	
+			}				
+			header('Location:http://localhost/Projet_piscine/Compte_cree.php');
+			exit();
+		}		
+
+ ?>
+
+
+
+
 	<form action="verification_compte.php" method="POST">
 		<table>
 			<tr>
 				<td>
 					<input type="text" name="email" placeholder="Votre adresse mail"/>
 				</td>
-				<td>
-					<?php 
-						$erreur=0;
-						if(empty($_POST["email"])){
-							echo '<div id="email_vide">Veuillez saisir votre adresse email</div>';
-							$erreur=1;
-						}else{
-							try
-							{
-								$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
-							}
-							catch (Exception $e)
-							{
-							        die('Erreur : ' . $e->getMessage());
-							}
-							$reponse=$bdd->query('SELECT EmailECE
-													FROM acheteur,admin,vendeur'
-												) or die(print_r($bdd->errorInfo()));
-							while($donnees=$reponse->fetch()){
-								echo $donnees["EmailECE"],$_POST["email"];
-								if($donnees["EmailECE"]==$_POST["email"]){
-									echo '<td><div id="email_vide">Cette adresse email est déjà utilisé, veuillez en saisir une autre</div></td>';
-									$erreur=1;
-
-								}
-							$reponse->closeCursor();
-							}							
-						}
-					 ?>
-				</td>
+				<?php 
+					if($mail_vide==1){
+						echo '<td><div id="email_vide">Veuillez saisir votre adresse email</div></td>';
+					}
+					if($erreur_mail==1){
+						echo '<td><div id="email_vide">Cette adresse email est déjà utilisé, veuillez en saisir une autre</div></td>';
+					}
+				 ?>									
 			</tr>
 			<tr>
 				<td>
 					<input type="text" name="nom"  placeholder="Nom"/>
-					<?php 
-						if(empty($_POST["nom"])){
-							echo '<td><div id="nom_vide">Veuillez saisir votre nom</div></td>';
-							$erreur=1;
-						}
-					 ?>
 				</td>
+				<?php 
+					if($nom_vide==1){
+						echo '<td><div id="nom_vide">Veuillez saisir votre nom</div></td>';
+					}
+				 ?>
 			</tr>
 			<tr>
 				<td>
 					<input type="text" name="prenom" placeholder="Prénom"/>
-					<?php 
-						if(empty($_POST["prenom"])){
-							echo '<td><div id="prenom_vide">Veuillez saisir un Prénom</div></td>';
-							$erreur=1;
-						}
-					 ?>
 				</td>
+				<?php 
+					if($prenom_vide==1){
+						echo '<td><div id="prenom_vide">Veuillez saisir votre prenom</div></td>';
+					}
+				 ?>
 			</tr>
 			<tr>
 				<td>
-				<input type="password" name="mdp" placeholder="Mot de passe"/>
-					<?php 
-						if(empty($_POST["mdp"])){
-							echo '<td><div id="mdp_vide">Veuillez saisir un mot de passe</div></td>';
-							$erreur=1;
-						}
-					 ?>
+					<input type="password" name="mdp" placeholder="Mot de passe"/>
 				</td>
+				<?php 
+					if($mdp_vide==1){
+						echo '<td><div id="mdp_vide">Veuillez saisir un mot de passe</div></td>';
+					}
+				 ?>
 			</tr>
 			<tr>
 				<td>
 					<input type="password" name="confirm_mdp" placeholder="Veuillez confirmer votre mot de passe"/>
-					<?php 
-						if(empty($_POST["confirm_mdp"])){
-							echo '<td><div id="confirm_mdp_vide">Veuillez confirmer votre mot de passe</div></td>';
-							$erreur=1;
-						}else{
-							if(empty($_POST["mdp"])){
-
-							}else{
-								if($_POST["mdp"]!=$_POST["confirm_mdp"]){
-									$erreur=1;
-									echo '<td><div id="confirm_mdp_vide">Les mot de passes doivent être identiques</div></td>';
-								}
-							}
-						}
-					 ?>
 				</td>
+				<?php 
+					if($confirm_mdp_vide==1){
+						echo '<td><div id="confirm_mdp_vide">Veuillez confirmer votre mot de passe</div></td>';
+					}
+					if($erreur_confirm_mdp==1){
+						echo '<td><div id="confirm_mdp_vide">Les mot de passes doivent être identiques</div></td>';
+					}			
+				 ?>
 			</tr>
 			<tr>
 				<td>
@@ -114,7 +258,6 @@
 						}else{
 							echo 'Souhaitez-vous acheter des produits <input type="checkbox" name="choix_acheteur" id="choix_acheteur" checked disabled="disabled"/>';
 						}
-
 					 ?>
 				</td>
 			</tr>
@@ -126,48 +269,41 @@
 							
 						}else{
 							echo '<input type="file" accept="image/png,image/jpeg" id="photo_profil" name="photo_profil"/>';
-							if(empty($_POST["photo_profil"])){
+							if($photo_profil_vide==1){
 								echo '<td><div id="pas_de_photo">Veuillez ajouter une photo à votre profil</div></td>';
-								$erreur=1;
 							}
 						}
 
 					 ?>
 				</td>
-			</tr>
-				<td>
-					<?php 
-					
-						if (empty($_POST["choix_vendeur"])) {
-							
-						}else{
-							echo '<input type="file" accept="image/png,image/jpeg" id="image_fond" name="image_fond"/>';
-							if(empty($_POST["image_fond"])){
-								echo '<td><div id="pas_de_fond">Veuillez ajouter une photo de fond pour votre page principale</div></td>';
-									$erreur=1;
-							}
-						}
+			</tr>		
+				<?php 
+				
+					if (empty($_POST["choix_vendeur"])) {
 						
-					 ?>
-				</td>
+					}else{
+						echo '<td><input type="file" accept="image/png,image/jpeg" id="image_fond" name="image_fond"/></td>';
+						if($fond_vide==1){
+							echo '<td><div id="pas_de_fond">Veuillez ajouter une photo de fond pour votre page principale</div></td>';
+						}
+					}
+					
+				 ?>		
 			</tr>
 			<tr>
-				<td>
-					<?php 
-					
-						if (empty($_POST["choix_vendeur"])) {
-							
-						}else{
-							echo '<input type="text" name="pseudo" id="pseudo" placeholder="Pseudo"/>';
-							if(empty($_POST["pseudo"])){
-								echo '<td><div id="pseudo_vide">Choississez un pseudo</div></td>';
-								$erreur=1;
-							}
-						}
+				<?php 				
+					if (empty($_POST["choix_vendeur"])) {
 						
-
-					 ?>
-				</td>
+					}else{
+						echo '<td><input type="text" name="pseudo" id="pseudo" placeholder="Pseudo"/></td>';
+						if($pseudo_vide==1){
+							echo '<td><div id="pseudo_vide">Choississez un pseudo</div></td>';
+						}
+						if($erreur_pseudo==1){
+							echo '<td><div id="email_vide">Ce pseudo est déjà utilisé par un autre utilisateur, veuillez en choisir un autre</div></td>';
+						}
+					}
+				 ?>
 			</tr>
 			<tr>
 				<td>
@@ -385,118 +521,73 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<?php 
-					
-						if (empty($_POST["choix_acheteur"])) {
-							
-						}else{
-							echo '<input type="number" id="code_p" name="code_p" placeholder="Code postal"/>';
-							if(empty($_POST["code_p"])){
-								echo '<td><div id="code_p_vide">Veuillez entrer votre code postal</div></td>';
-								$erreur=1;
-							}
-						}
+				<?php 
+				
+					if (empty($_POST["choix_acheteur"])) {
 						
-					 ?>
-				</td>
+					}else{
+						echo '<td><input type="number" id="code_p" name="code_p" placeholder="Code postal"/></td>';
+						if($code_p_vide==1){
+							echo '<td><div id="code_p_vide">Veuillez entrer votre code postal</div></td>';
+						}
+					}
+					
+				 ?>			
 			</tr>
 			<tr>
-				<td>
-					<?php 
-					
-						if (empty($_POST["choix_acheteur"])) {
-							
-						}else{
-							echo '<input type="text" name="adresse_1" id="adresse_1" placeholder="Adresse numéro 1"/>';
-							if(empty($_POST["adresse_1"])){
-								echo '<td><div id="adresse_vide">Veuillez renseigner votre adresse</div></td>';
-								$erreur=1;
-							}
-						}
-					
-					 ?>
-				</td>
-			</tr>
-			<tr>
-					<?php 
-					
-						if (empty($_POST["choix_acheteur"])) {
-							
-						}else{
-							echo '<td id="td_adresse_2"><input type="text" name="adresse_2" id="adresse_2" placeholder="Adresse numéro 2"/>(Facultatif)</td>';
-						}
+				<?php 
+				
+					if (empty($_POST["choix_acheteur"])) {
 						
-					 ?>
+					}else{
+						echo '<td><input type="text" name="adresse_1" id="adresse_1" placeholder="Adresse numéro 1"/></td>';
+						if($adresse_vide==1){
+							echo '<td><div id="adresse_vide">Veuillez renseigner votre adresse</div></td>';
+						}
+					}
+				
+				 ?>
 			</tr>
 			<tr>
-				<td>
-					<?php
-					
-						if (empty($_POST["choix_acheteur"])) {
-							
-						}else{
-							echo '<input type="text" name="ville" id="ville" placeholder="Ville"/>';
-							if(empty($_POST["ville"])){
-								echo '<td><div id="ville_vide">Veuillez renseigner votre ville</div></td>';
-								$erreur=1;
-							}
-						}
+				<?php 
+				
+					if (empty($_POST["choix_acheteur"])) {
 						
-					 ?>
-				</td>
+					}else{
+						echo '<td id="td_adresse_2"><input type="text" name="adresse_2" id="adresse_2" placeholder="Adresse numéro 2"/>(Facultatif)</td>';
+					}
+					
+				 ?>
 			</tr>
 			<tr>
-				<td>
-					<?php 
-					
-						if (empty($_POST["choix_acheteur"])) {
-							
-						}else{
-							echo '<input type="tel" name="num" id="num" placeholder="Numéro de téléphone"/>';
-							if(empty($_POST["num"])){
-								echo '<td><div id="num_vide">Veuillez indiquer votre numéro de téléphone</div></td>';
-								$erreur=1;
-							}
+				<?php
+				
+					if (empty($_POST["choix_acheteur"])) {
+						
+					}else{
+						echo '<td><input type="text" name="ville" id="ville" placeholder="Ville"/></td>';
+						if($ville_vide==1){
+							echo '<td><div id="ville_vide">Veuillez renseigner votre ville</div></td>';
 						}
+					}
 					
-					?>
-				</td>
+				 ?>
+			</tr>
+			<tr>
+				<?php 
+				
+					if (empty($_POST["choix_acheteur"])) {
+						
+					}else{
+						echo '<td><input type="tel" name="num" id="num" placeholder="Numéro de téléphone"/></td>';
+						if($num_vide==1){
+							echo '<td><div id="num_vide">Veuillez indiquer votre numéro de téléphone</div></td>';
+						}
+					}
+				
+				?>		
 			</tr>
 		</table>
-		<?php 
-			if(isset($_POST["validation"])){
-				if($erreur==0){
-					try
-					{
-						$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
-					}
-					catch (Exception $e)
-					{
-					        die('Erreur : ' . $e->getMessage());
-					}
-					if(empty($_POST["choix_vendeur"])){
-						$bdd->query("INSERT INTO acheteur
-									 VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['mdp']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['num']}');"
-										) or die(print_r($bdd->errorInfo()));
-
-					}
-					elseif(empty($_POST["choix_acheteur"])){
-						$bdd->query("INSERT INTO vendeur
-											  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['photo_profil']}','{$_POST['image_fond']}','{$_POST['mdp']}');"
-										) or die(print_r($bdd->errorInfo()));
-					}
-					else{
-						$bdd->query("INSERT INTO vendeur
-											  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['photo_profil']}','{$_POST['image_fond']}','{$_POST['mdp']}');"
-										) or die(print_r($bdd->errorInfo()));
-						$bdd->query("INSERT INTO acheteur
-											  VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['mdp']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['num']}');"
-										) or die(print_r($bdd->errorInfo()));	
-					}					
-				}
-			}
-		 ?>
 		<input type="submit" value="Valider" name="validation" />
 	</form>
 </body>

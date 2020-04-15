@@ -77,7 +77,7 @@
 	</script>
 </head>
 <body>
-	<form action="verification_compte.php" method="POST">
+	<form action="verification_compte.php" method="POST"  enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>
@@ -115,11 +115,11 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="file" accept="image/png,image/jpeg" id="photo_profil" name="photo_profil" style="visibility:hidden;"/>
+					<input type="file"  id="photo_profil" accept="image/png,image/jpeg" name="photo_profil" style="visibility:hidden;"/>
 				</td>
 			</tr>
 				<td>
-					<input type="file" accept="image/png,image/jpeg" id="image_fond" name="image_fond" style="visibility:hidden;"/>
+					<input type="file" id="image_fond" accept="image/png,image/jpeg" name="image_fond" style="visibility:hidden;"/>
 				</td>
 			</tr>
 			<tr>
@@ -362,7 +362,7 @@
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="Valider" name="validation" />
+		<input type="submit" value="Valider" name="valider" />
 	</form>
 </body>
 </html>

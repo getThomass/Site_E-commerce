@@ -9,180 +9,190 @@
 	<?php
 	$mail_vide=0;
 	$erreur_mail=0;
-	if(empty($_POST["email"])){
-		$mail_vide=1;
-	}else{
-		try
-		{
-			$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
-		}
-		catch (Exception $e)
-		{
-		        die('Erreur : ' . $e->getMessage());
-		}
-		$reponse=$bdd->query('SELECT EmailECE
-								FROM acheteur'
-							) or die(print_r($bdd->errorInfo()));
-		while($donnees=$reponse->fetch()){
-			if($donnees["EmailECE"]==$_POST["email"]){
-				$erreur_mail=1;
-			}
-		}
-		$reponse->closeCursor();
-		$reponse_2=$bdd->query('SELECT EmailECE
-								FROM vendeur'
-							) or die(print_r($bdd->errorInfo()));
-		while($donnees_2=$reponse_2->fetch()){
-			if($donnees_2["EmailECE"]==$_POST["email"]){
-				$erreur_mail=1;
-			}
-		}
-		$reponse_2->closeCursor();
-		$reponse_3=$bdd->query('SELECT EmailECE
-								FROM admin'
-							) or die(print_r($bdd->errorInfo()));
-		while($donnees_3=$reponse_3->fetch()){
-			if($donnees_3["EmailECE"]==$_POST["email"]){
-				$erreur_mail=1;
-			}
-		}
-		$reponse_3->closeCursor();	
-	}
-
-
-		$nom_vide=0;
-		if(empty($_POST["nom"])){
-			$nom_vide=1;
-		}	
-
-		$prenom_vide=0;
-		if(empty($_POST["prenom"])){
-			$prenom_vide=1;
-		}
-		
-		$mdp_vide=0;
-		if(empty($_POST["mdp"])){
-			$mdp_vide=1;
-		}
-
-		$confirm_mdp_vide=0;
-		$erreur_confirm_mdp=0;
-		if(empty($_POST["confirm_mdp"])){
-			$confirm_mdp_vide=1;
+	if(isset($_POST["valider"])){					
+		if(empty($_POST["email"])){
+			$mail_vide=1;
 		}else{
-			if(empty($_POST["mdp"])){
-
-			}else{
-				if($_POST["mdp"]!=$_POST["confirm_mdp"]){
-					$erreur_confirm_mdp=1;
-				}
-			}
-		}
-
-		$photo_profil_vide=0;
-		$fond_vide=0;
-		if (empty($_POST["choix_vendeur"])) {
-			
-		}else{
-			if(empty($_POST["photo_profil"])){
-				$photo_profil_vide=1;
-			}
-			if(empty($_POST["image_fond"])){
-				$fond_vide=1;
-			}
-			if(empty($_POST["pseudo"])){
-				$pseudo_vide=1;
-			}
-		}
-
-		$erreur_pseudo=0;
-		$pseudo_vide=0;
-		if (empty($_POST["choix_vendeur"])){
-
-		}else{
-			if(empty($_POST["pseudo"])){
-				$pseudo_vide=1;
-			}else{
-				try
-				{
-					$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
-				}
-				catch (Exception $e)
-				{
-				        die('Erreur : ' . $e->getMessage());
-				}
-				$reponse=$bdd->query('SELECT Pseudo
-										FROM vendeur'
-									) or die(print_r($bdd->errorInfo()));
-				while($donnees=$reponse->fetch()){
-					if($donnees["Pseudo"]==$_POST["pseudo"]){
-						$erreur_pseudo=1;
-					}
-				}
-				$reponse->closeCursor();
-			}	
-		}
-
-		$code_p_vide=0;
-		$adresse_vide=0;
-		$ville_vide=0;
-		$num_vide=0;
-		if (empty($_POST["choix_acheteur"])) {
-						
-		}else{
-			if(empty($_POST["code_p"])){
-				$code_p_vide=1;
-			}
-			if(empty($_POST["adresse_1"])){
-				$adresse_vide=1;
-			}
-			if(empty($_POST["ville"])){
-				$ville_vide=1;
-			}
-			if(empty($_POST["num"])){
-				$num_vide=1;
-			}
-		}
-
-
-		if($mail_vide==0&&$erreur_mail==0&&$nom_vide==0&&$prenom_vide==0&&$mdp_vide==0&&$confirm_mdp_vide==0&&$erreur_confirm_mdp==0&&$photo_profil_vide==0&&$fond_vide==0&&$pseudo_vide==0&&$erreur_pseudo==0&&$code_p_vide==0&&$adresse_vide==0&&$ville_vide==0&&$num_vide==0){
 			try
 			{
-				$bdd = new PDO('mysql:host=localhost:3308;dbname=utilisateur_ebay_ece;charset=utf8', 'root', '');
+				$bdd = new PDO('mysql:host=localhost:3308;dbname=projetpiscine;charset=utf8', 'root', '');
 			}
 			catch (Exception $e)
 			{
 			        die('Erreur : ' . $e->getMessage());
 			}
-			if(empty($_POST["choix_vendeur"])){
-				$bdd->query("INSERT INTO acheteur
-							 VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['mdp']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['num']}');"
+			$reponse=$bdd->query('SELECT Email_ECE
+									FROM acheteur'
 								) or die(print_r($bdd->errorInfo()));
+			while($donnees=$reponse->fetch()){
+				if($donnees["Email_ECE"]==$_POST["email"]){
+					$erreur_mail=1;
+				}
+			}
+			$reponse->closeCursor();
+			$reponse_2=$bdd->query('SELECT Email_ECE
+									FROM vendeur'
+								) or die(print_r($bdd->errorInfo()));
+			while($donnees_2=$reponse_2->fetch()){
+				if($donnees_2["Email_ECE"]==$_POST["email"]){
+					$erreur_mail=1;
+				}
+			}
+			$reponse_2->closeCursor();	
+		}
 
+
+			$nom_vide=0;
+			if(empty($_POST["nom"])){
+				$nom_vide=1;
+			}	
+
+			$prenom_vide=0;
+			if(empty($_POST["prenom"])){
+				$prenom_vide=1;
 			}
-			elseif(empty($_POST["choix_acheteur"])){
-				$bdd->query("INSERT INTO vendeur
-									  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['photo_profil']}','{$_POST['image_fond']}','{$_POST['mdp']}');"
-								) or die(print_r($bdd->errorInfo()));
+			
+			$mdp_vide=0;
+			if(empty($_POST["mdp"])){
+				$mdp_vide=1;
 			}
-			else{
-				$bdd->query("INSERT INTO vendeur
-									  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['photo_profil']}','{$_POST['image_fond']}','{$_POST['mdp']}');"
-								) or die(print_r($bdd->errorInfo()));
-				$bdd->query("INSERT INTO acheteur
-									  VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['mdp']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['num']}');"
-								) or die(print_r($bdd->errorInfo()));	
-			}				
-			header('Location:http://localhost/Projet_piscine/Compte_cree.php');
-			exit();
-		}		
+
+			$confirm_mdp_vide=0;
+			$erreur_confirm_mdp=0;
+			if(empty($_POST["confirm_mdp"])){
+				$confirm_mdp_vide=1;
+			}else{
+				if(empty($_POST["mdp"])){
+
+				}else{
+					if($_POST["mdp"]!=$_POST["confirm_mdp"]){
+						$erreur_confirm_mdp=1;
+					}
+				}
+			}
+
+			$photo_profil_vide=0;
+			$fond_vide=0;
+			if (isset($_POST["choix_vendeur"])) {
+				
+			}else{
+				if(isset($_FILES["photo_profil"])){
+
+				}else{
+					$photo_profil_vide=1;
+				}
+				if(isset($_FILES["image_fond"])){
+
+				}else{
+					$fond_vide=1;
+				}
+				if(empty($_POST["pseudo"])){
+					$pseudo_vide=1;
+				}
+			}
+
+			$erreur_pseudo=0;
+			$pseudo_vide=0;
+			if (empty($_POST["choix_vendeur"])){
+
+			}else{
+				if(empty($_POST["pseudo"])){
+					$pseudo_vide=1;
+				}else{
+					try
+					{
+						$bdd = new PDO('mysql:host=localhost:3308;dbname=projetpiscine;charset=utf8', 'root', '');
+					}
+					catch (Exception $e)
+					{
+					        die('Erreur : ' . $e->getMessage());
+					}
+					$reponse=$bdd->query('SELECT Pseudo
+											FROM vendeur'
+										) or die(print_r($bdd->errorInfo()));
+					while($donnees=$reponse->fetch()){
+						if($donnees["Pseudo"]==$_POST["pseudo"]){
+							$erreur_pseudo=1;
+						}
+					}
+					$reponse->closeCursor();
+				}	
+			}
+
+			$code_p_vide=0;
+			$adresse_vide=0;
+			$ville_vide=0;
+			$num_vide=0;
+			if (empty($_POST["choix_acheteur"])) {
+							
+			}else{
+				if(empty($_POST["code_p"])){
+					$code_p_vide=1;
+				}
+				if(empty($_POST["adresse_1"])){
+					$adresse_vide=1;
+				}
+				if(empty($_POST["ville"])){
+					$ville_vide=1;
+				}
+				if(empty($_POST["num"])){
+					$num_vide=1;
+				}
+			}
+
+			
+			if($mail_vide==0&&$erreur_mail==0&&$nom_vide==0&&$prenom_vide==0&&$mdp_vide==0&&$confirm_mdp_vide==0&&$erreur_confirm_mdp==0&&$photo_profil_vide==0&&$fond_vide==0&&$pseudo_vide==0&&$erreur_pseudo==0&&$code_p_vide==0&&$adresse_vide==0&&$ville_vide==0&&$num_vide==0){
+				try
+				{
+					$bdd = new PDO('mysql:host=localhost:3308;dbname=projetpiscine;charset=utf8', 'root', '');
+				}
+				catch (Exception $e)
+				{
+				        die('Erreur : ' . $e->getMessage());
+				}
+				if(empty($_POST["choix_vendeur"])){
+					$bdd->query("INSERT INTO acheteur
+								 VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['mdp']}','{$_POST['num']}');"
+									) or die(print_r($bdd->errorInfo()));
+
+				}
+				elseif(empty($_POST["choix_acheteur"])){
+					$bdd->query("INSERT INTO vendeur
+										  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_FILES['photo_profil']['name']}','{$_FILES['image_fond']['name']}','{$_POST['mdp']}');") or die(print_r($bdd->errorInfo()));
+					
+					$name_photo=$_FILES["photo_profil"]["name"];
+					$tmp_photo=$_FILES["photo_profil"]["tmp_name"];
+					$name_fond=$_FILES["image_fond"]["name"];
+					$tmp_fond=$_FILES["image_fond"]["tmp_name"];
+					move_uploaded_file($tmp_photo,"Photo_vendeur/".$name_photo);
+					move_uploaded_file($tmp_fond,"Fond_vendeur/".$name_fond);	
+				}
+				else{
+					$bdd->query("INSERT INTO vendeur
+										  VALUES (NULL,'{$_POST['email']}','{$_POST['pseudo']}','{$_POST['nom']}','{$_POST['prenom']}','{$_FILES['photo_profil']['name']}','{$_FILES['image_fond']['name']}','{$_POST['mdp']}');"
+									) or die(print_r($bdd->errorInfo()));
+					$bdd->query("INSERT INTO acheteur
+								 VALUES (NULL,'{$_POST['email']}','{$_POST['nom']}','{$_POST['prenom']}','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','{$_POST['mdp']}','{$_POST['num']}');"
+									) or die(print_r($bdd->errorInfo()));
+					$name_photo=$_FILES["photo_profil"]["name"];
+					$tmp_photo=$_FILES["photo_profil"]["tmp_name"];
+					$name_fond=$_FILES["image_fond"]["name"];
+					$tmp_fond=$_FILES["image_fond"]["tmp_name"];
+					move_uploaded_file($tmp_photo,"Photo_vendeur/".$name_photo);
+					move_uploaded_file($tmp_fond,"Fond_vendeur/".$name_fond);	
+				}				
+				header('Location:http://localhost/Projet_piscine/Inscription/Compte_cree.php');
+				exit();
+			}
+			
+	}		
 
  ?>
 
 
 
 
-	<form action="verification_compte.php" method="POST">
+	<form action="verification_compte.php" method="POST" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>
@@ -588,7 +598,7 @@
 				?>		
 			</tr>
 		</table>
-		<input type="submit" value="Valider" name="validation" />
+		<input type="submit" value="Valider" name="valider" />
 	</form>
 </body>
 </html>

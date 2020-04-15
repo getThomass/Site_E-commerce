@@ -30,8 +30,8 @@ Création d'un site web de E-commerce
 	 					<li class="deroulant"><a class="nav-link"href="#">Categorie</a>
                              <!-- création du menu déroulant -->
 	 						<ul class="deroule">
-	 							<li><a href="#">Trésor</a></li>
-	 							<li><a href="#">Ferraille</a></li>
+	 							<li><a href="#">Trésor ou Ferraille</a></li>
+	 							<li><a href="#">Bon pour le musée</a></li>
 	 							<li><a href="#">Accesoire VIP</a></li>
 	 						</ul>
 

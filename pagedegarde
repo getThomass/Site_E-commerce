@@ -64,8 +64,7 @@ Création d'un site web de E-commerce
 	 			<p>Amateurs de tresor ancien etes vous pret à realiser les plus grandes affaires de votre vies !!</p>
 	 			<p> Bienvenue à la vente aux enchères en ligne de l'ECE Paris.</p> 
 
-                <button><a href="#"><span class="affichage">Connexion</span></a></button>
-                <button><a href="#"><span class="affichage">Inscription</span></a></button>
+                <button><a href="#"><span class="affichage">Let's go !</span></a></button>
                 			
 	 		</div>
 	 	</header>

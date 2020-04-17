@@ -74,8 +74,6 @@
 			$photo_profil_vide=0;
 			$fond_vide=0;
 			if (isset($_POST["choix_vendeur"])) {
-				
-			}else{
 				if(isset($_FILES["photo_profil"])){
 
 				}else{
@@ -93,9 +91,7 @@
 
 			$erreur_pseudo=0;
 			$pseudo_vide=0;
-			if (empty($_POST["choix_vendeur"])){
-
-			}else{
+			if (isset($_POST["choix_vendeur"])){
 				if(empty($_POST["pseudo"])){
 					$pseudo_vide=1;
 				}else{
@@ -123,9 +119,8 @@
 			$adresse_vide=0;
 			$ville_vide=0;
 			$num_vide=0;
-			if (empty($_POST["choix_acheteur"])) {
-							
-			}else{
+			if (isset($_POST["choix_acheteur"])) {
+
 				if(empty($_POST["code_p"])){
 					$code_p_vide=1;
 				}
@@ -188,11 +183,222 @@
 	}		
 
  ?>
+ 	<script>
+		$(document).ready(function(){
+			if($("#choix_vendeur").change(function(){
+				if($(this).is($(":checked"))){
+					$("#photo_profil").css("visibility","visible");
+					$("#image_fond").css("visibility","visible");
+					$("#pseudo").css("visibility","visible");
+				<?php  
+					if($photo_profil_vide==1){
+						echo '$("#pas_de_photo").css("visibility","visible");';
+					}
+					if($fond_vide==1){
+						echo '$("#pas_de_fond").css("visibility","visible");';
+					}
+					if($pseudo_vide==1){
+						echo '$("#pseudo_vide").css("visibility","visible");';
+					}
+					if($erreur_pseudo==1){
+						echo '$("#pseudo_prit").css("visibility","visible");';
+					}
+				?>
+				}
+				else if(($(this).is($(":checked"))==false)&&($($("#choix_acheteur")).is($(":checked"))==false)){
+					$("#choix_acheteur").prop("checked",true);
+					$("#adresse_1").css("visibility","visible");
+					$("#td_adresse_2").css("visibility","visible");
+					$("#ville").css("visibility","visible");
+					$("#code_p").css("visibility","visible");
+					$("#pays").css("visibility","visible");
+					$("#num").css("visibility","visible");
+					$("#photo_profil").css("visibility","hidden");
+					$("#image_fond").css("visibility","hidden");
+					$("#pseudo").css("visibility","hidden");
+					<?php 
+						if($code_p_vide==1){
+							echo '$("#code_p_vide").css("visibility","visible");';
+						}
+						if($adresse_vide==1){
+							echo '$("#adresse_vide").css("visibility","visible");';
+						}
+						if($ville_vide==1){
+							echo '$("#ville_vide").css("visibility","visible");';
+						}
+						if($num_vide==1){
+							echo '$("#num_vide").css("visibility","visible");';
+						}
+					 ?>
+					<?php  
+						if($photo_profil_vide==1){
+							echo '$("#pas_de_photo").css("visibility","hidden");';
+						}
+						if($fond_vide==1){
+							echo '$("#pas_de_fond").css("visibility","hidden");';
+						}
+						if($pseudo_vide==1){
+							echo '$("#pseudo_vide").css("visibility","hidden");';
+						}
+						if($erreur_pseudo==1){
+							echo '$("#pseudo_prit").css("visibility","hidden");';
+						}
+					?>
+				}
+				else{
+					$("#photo_profil").css("visibility","hidden");
+					$("#image_fond").css("visibility","hidden");
+					$("#pseudo").css("visibility","hidden");
+				<?php  
+					if($photo_profil_vide==1){
+						echo '$("#pas_de_photo").css("visibility","hidden");';
+					}
+					if($fond_vide==1){
+						echo '$("#pas_de_fond").css("visibility","hidden");';
+					}
+					if($pseudo_vide==1){
+						echo '$("#pseudo_vide").css("visibility","hidden");';
+					}
+					if($erreur_pseudo==1){
+						echo '$("#pseudo_prit").css("visibility","hidden");';
+					}
+				?>	
+				}					
+			}));
+			if($("#choix_acheteur").change(function(){
+				if($(this).is($(":checked"))){
+					$("#adresse_1").css("visibility","visible");
+					$("#td_adresse_2").css("visibility","visible");
+					$("#ville").css("visibility","visible");
+					$("#code_p").css("visibility","visible");
+					$("#pays").css("visibility","visible");
+					$("#num").css("visibility","visible");
+					<?php 
+						if($code_p_vide==1){
+							echo '$("#code_p_vide").css("visibility","visible");';
+						}
+						if($adresse_vide==1){
+							echo '$("#adresse_vide").css("visibility","visible");';
+						}
+						if($ville_vide==1){
+							echo '$("#ville_vide").css("visibility","visible");';
+						}
+						if($num_vide==1){
+							echo '$("#num_vide").css("visibility","visible");';
+						}
+					 ?>
+				}
+				else if(($(this).is($(":checked"))==false)&&($($("#choix_vendeur")).is($(":checked"))==false)){
+					$("#choix_vendeur").prop("checked",true);
+					$("#photo_profil").css("visibility","visible");
+					$("#image_fond").css("visibility","visible");
+					$("#pseudo").css("visibility","visible");
+					$("#adresse_1").css("visibility","hidden");
+					$("#td_adresse_2").css("visibility","hidden");
+					$("#ville").css("visibility","hidden");
+					$("#code_p").css("visibility","hidden");
+					$("#pays").css("visibility","hidden");
+					$("#num").css("visibility","hidden");
+					<?php  
+						if($photo_profil_vide==1){
+							echo '$("#pas_de_photo").css("visibility","visible");';
+						}
+						if($fond_vide==1){
+							echo '$("#pas_de_fond").css("visibility","visible");';
+						}
+						if($pseudo_vide==1){
+							echo '$("#pseudo_vide").css("visibility","visible");';
+						}
+						if($erreur_pseudo==1){
+							echo '$("#pseudo_prit").css("visibility","visible");';
+						}
+					?>
+					<?php 
+						if($code_p_vide==1){
+							echo '$("#code_p_vide").css("visibility","hidden");';
+						}
+						if($adresse_vide==1){
+							echo '$("#adresse_vide").css("visibility","hidden");';
+						}
+						if($ville_vide==1){
+							echo '$("#ville_vide").css("visibility","hidden");';
+						}
+						if($num_vide==1){
+							echo '$("#num_vide").css("visibility","hidden");';
+						}
+					 ?>
+				}
+				else{
+					$("#adresse_1").css("visibility","hidden");
+					$("#td_adresse_2").css("visibility","hidden");
+					$("#ville").css("visibility","hidden");
+					$("#code_p").css("visibility","hidden");
+					$("#pays").css("visibility","hidden");
+					$("#num").css("visibility","hidden");
+					<?php 
+						if($code_p_vide==1){
+							echo '$("#code_p_vide").css("visibility","hidden");';
+						}
+						if($adresse_vide==1){
+							echo '$("#adresse_vide").css("visibility","hidden");';
+						}
+						if($ville_vide==1){
+							echo '$("#ville_vide").css("visibility","hidden");';
+						}
+						if($num_vide==1){
+							echo '$("#num_vide").css("visibility","hidden");';
+						}
+					 ?>
+				}	
+			}));
+			if( $("#choix_vendeur").is($(":checked"))  ){
+				$("#photo_profil").css("visibility","visible");
+				$("#image_fond").css("visibility","visible");
+				$("#pseudo").css("visibility","visible");	
+				<?php  
+					if($photo_profil_vide==1){
+						echo '$("#pas_de_photo").css("visibility","visible");';
+					}
+					if($fond_vide==1){
+						echo '$("#pas_de_fond").css("visibility","visible");';
+					}
+					if($pseudo_vide==1){
+						echo '$("#pseudo_vide").css("visibility","visible");';
+					}
+					if($erreur_pseudo==1){
+						echo '$("#pseudo_prit").css("visibility","visible");';
+					}
+				?>			
+			}
+			if( $("#choix_acheteur").is($(":checked"))  ){
+				$("#adresse_1").css("visibility","visible");
+				$("#td_adresse_2").css("visibility","visible");
+				$("#ville").css("visibility","visible");
+				$("#code_p").css("visibility","visible");
+				$("#pays").css("visibility","visible");
+				$("#num").css("visibility","visible");	
+					<?php 
+						if($code_p_vide==1){
+							echo '$("#code_p_vide").css("visibility","visible");';
+						}
+						if($adresse_vide==1){
+							echo '$("#adresse_vide").css("visibility","visible");';
+						}
+						if($ville_vide==1){
+							echo '$("#ville_vide").css("visibility","visible");';
+						}
+						if($num_vide==1){
+							echo '$("#num_vide").css("visibility","visible");';
+						}
+					 ?>			
+		}
+		});
+	</script>
 
 
 
 
-	<form action="verification_compte.php" method="POST" enctype="multipart/form-data">
+	<form action="Verification_compte.php" method="POST" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>
@@ -253,20 +459,18 @@
 			<tr>
 				<td>
 					<?php 
-						if (empty($_POST["choix_vendeur"])) {
+						if (isset($_POST["choix_vendeur"])) {
 							
-						}else{
-							echo 'Souhaitez-vous vendre des produits <input type="checkbox" name="choix_vendeur" id="choix_vendeur" checked disabled="disabled"/>';
+							echo 'Souhaitez-vous vendre des produits <input type="checkbox" name="choix_vendeur" id="choix_vendeur" checked "/>';
 						}
 
 					 ?>
 				</td>
 				<td>
 					<?php 
-						if (empty($_POST["choix_acheteur"])) {
+						if (isset($_POST["choix_acheteur"])) {
 							
-						}else{
-							echo 'Souhaitez-vous acheter des produits <input type="checkbox" name="choix_acheteur" id="choix_acheteur" checked disabled="disabled"/>';
+							echo 'Souhaitez-vous acheter des produits <input type="checkbox" name="choix_acheteur" id="choix_acheteur" checked "/>';
 						}
 					 ?>
 				</td>
@@ -275,9 +479,8 @@
 				<td>
 					<?php 
 					
-						if (empty($_POST["choix_vendeur"])) {
+						if (isset($_POST["choix_vendeur"])) {
 							
-						}else{
 							echo '<input type="file" accept="image/png,image/jpeg" id="photo_profil" name="photo_profil"/>';
 							if($photo_profil_vide==1){
 								echo '<td><div id="pas_de_photo">Veuillez ajouter une photo à votre profil</div></td>';
@@ -289,9 +492,8 @@
 			</tr>		
 				<?php 
 				
-					if (empty($_POST["choix_vendeur"])) {
+					if (isset($_POST["choix_vendeur"])) {
 						
-					}else{
 						echo '<td><input type="file" accept="image/png,image/jpeg" id="image_fond" name="image_fond"/></td>';
 						if($fond_vide==1){
 							echo '<td><div id="pas_de_fond">Veuillez ajouter une photo de fond pour votre page principale</div></td>';
@@ -302,15 +504,13 @@
 			</tr>
 			<tr>
 				<?php 				
-					if (empty($_POST["choix_vendeur"])) {
-						
-					}else{
+					if (isset($_POST["choix_vendeur"])) {
 						echo '<td><input type="text" name="pseudo" id="pseudo" placeholder="Pseudo"/></td>';
 						if($pseudo_vide==1){
-							echo '<td><div id="pseudo_vide">Choississez un pseudo</div></td>';
+							echo '<td><div id="pseudo_vide">Choisissez un pseudo</div></td>';
 						}
 						if($erreur_pseudo==1){
-							echo '<td><div id="email_vide">Ce pseudo est déjà utilisé par un autre utilisateur, veuillez en choisir un autre</div></td>';
+							echo '<td><div id="pseudo_prit">Ce pseudo est déjà utilisé par un autre utilisateur, veuillez en choisir un autre</div></td>';
 						}
 					}
 				 ?>
@@ -319,9 +519,8 @@
 				<td>
 					<?php 
 					
-						if (empty($_POST["choix_acheteur"])) {
+						if (isset($_POST["choix_acheteur"])) {
 							
-						}else{
 							echo '<select name="pays" id="pays"><optgroup label="Afrique">
 							<option value="afriqueDuSud">Afrique Du Sud</option>
 							<option value="algerie">Algérie</option>
@@ -533,9 +732,9 @@
 			<tr>
 				<?php 
 				
-					if (empty($_POST["choix_acheteur"])) {
+					if (isset($_POST["choix_acheteur"])) {
 						
-					}else{
+
 						echo '<td><input type="number" id="code_p" name="code_p" placeholder="Code postal"/></td>';
 						if($code_p_vide==1){
 							echo '<td><div id="code_p_vide">Veuillez entrer votre code postal</div></td>';
@@ -547,9 +746,8 @@
 			<tr>
 				<?php 
 				
-					if (empty($_POST["choix_acheteur"])) {
+					if (isset($_POST["choix_acheteur"])) {
 						
-					}else{
 						echo '<td><input type="text" name="adresse_1" id="adresse_1" placeholder="Adresse numéro 1"/></td>';
 						if($adresse_vide==1){
 							echo '<td><div id="adresse_vide">Veuillez renseigner votre adresse</div></td>';
@@ -561,9 +759,8 @@
 			<tr>
 				<?php 
 				
-					if (empty($_POST["choix_acheteur"])) {
+					if (isset($_POST["choix_acheteur"])) {
 						
-					}else{
 						echo '<td id="td_adresse_2"><input type="text" name="adresse_2" id="adresse_2" placeholder="Adresse numéro 2"/>(Facultatif)</td>';
 					}
 					
@@ -572,9 +769,8 @@
 			<tr>
 				<?php
 				
-					if (empty($_POST["choix_acheteur"])) {
+					if (isset($_POST["choix_acheteur"])) {
 						
-					}else{
 						echo '<td><input type="text" name="ville" id="ville" placeholder="Ville"/></td>';
 						if($ville_vide==1){
 							echo '<td><div id="ville_vide">Veuillez renseigner votre ville</div></td>';
@@ -586,9 +782,8 @@
 			<tr>
 				<?php 
 				
-					if (empty($_POST["choix_acheteur"])) {
-						
-					}else{
+					if (isset($_POST["choix_acheteur"])) {
+
 						echo '<td><input type="tel" name="num" id="num" placeholder="Numéro de téléphone"/></td>';
 						if($num_vide==1){
 							echo '<td><div id="num_vide">Veuillez indiquer votre numéro de téléphone</div></td>';

@@ -24,7 +24,7 @@
                             <input type="submit" value="Supprimer un article">
                             </a>
                         </td>
-                        <td><a href="ajoutervendeur.php?email=adminsite@edu.ece.fr"> <!-- <?php// echo $_GET['email']; ?> pour récupérer l'email mis avant (Thomas)-->
+                        <td><a href="ajout_vendeur.php?email=adminsite@edu.ece.fr"> <!-- <?php// echo $_GET['email']; ?> pour récupérer l'email mis avant (Thomas)-->
                             <input type="submit" value="Ajouter un nouveau vendeur">
                             </a>
                         </td>

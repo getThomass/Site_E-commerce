@@ -2,100 +2,57 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Informations de votre compte</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			if($("#souhait_acheteur").change(function(){
-				if($(this).is($(":checked"))){
-					$("#adresse_1").css("visibility","visible");
-					$("#adresse_2").css("visibility","visible");
-					$("#ville").css("visibility","visible");
-					$("#code_p").css("visibility","visible");
-					$("#pays").css("visibility","visible");
-					$("#num").css("visibility","visible");
-					$("#valider").css("visibility","visible");
-				};
-				if($(this).is($(":checked"))==false){
-					$("#adresse_1").css("visibility","hidden");
-					$("#adresse_2").css("visibility","hidden");
-					$("#ville").css("visibility","hidden");
-					$("#code_p").css("visibility","hidden");
-					$("#pays").css("visibility","hidden");
-					$("#num").css("visibility","hidden");
-					$("#valider").css("visibility","hidden");
-				};
-			}));
-			if($("#souhait_vendeur").change(function(){
-				if($(this).is($(":checked"))){
-					$("#photo_profil").css("visibility","visible");
-					$("#image_fond").css("visibility","visible");
-					$("#pseudo").css("visibility","visible");
-					$("#valider").css("visibility","visible");
-				};
-				if($(this).is($(":checked"))==false){
-					$("#photo_profil").css("visibility","hidden");
-					$("#image_fond").css("visibility","hidden");
-					$("#pseudo").css("visibility","hidden");
-					$("#valider").css("visibility","hidden");
-				};
-			}));
-			if($("#souhait_vendeur").is($(":checked"))){
-					$("#photo_profil").css("visibility","visible");
-					$("#image_fond").css("visibility","visible");
-					$("#pseudo").css("visibility","visible");
-					$("#valider").css("visibility","visible");
-			};
-			if($("#souhait_acheteur").is($(":checked"))){
-					$("#adresse_1").css("visibility","visible");
-					$("#adresse_2").css("visibility","visible");
-					$("#ville").css("visibility","visible");
-					$("#code_p").css("visibility","visible");
-					$("#pays").css("visibility","visible");
-					$("#num").css("visibility","visible");
-					$("#valider").css("visibility","visible");
-			};
-		});
-	</script>
+	<title>Vérification</title>
 </head>
 <body>
-	<h1>Information sur votre compte:</h1>
 	<?php 
-		try
-		{
-			$bdd = new PDO('mysql:host=localhost:3308;dbname=projetpiscine;charset=utf8', 'root', '');
-		}
-		catch (Exception $e)
-		{
-		        die('Erreur : ' . $e->getMessage());
-		}
-		$reponse=$bdd->query("	SELECT *
-								FROM acheteur							
-							") or die(print_r($bdd->errorInfo()));
-		$type="vendeur";
-		while($donnees=$reponse->fetch()){
-			if($donnees['Email_ECE']==$_GET['email']){
-				$type="acheteur";
-				echo  '<table><tr><td>Nom: '.$donnees["Nom_acheteur"].'</td></tr><tr><td>Prenom: '.$donnees["Prenom_acheteur"].'</td></tr><tr><td>Adresse: '.$donnees["Adresse_ligne1"].'</td></tr><tr><td>Email :'.$donnees["Email_ECE"].'</td></tr></table>';
+		if(isset($_POST["valider"])){
+			$code_p_vide=0;
+			$adresse_vide=0;
+			$ville_vide=0;
+			$num_vide=0;
+			if(empty($_POST["code_p"])){
+				$code_p_vide=1;
+			}
+			if(empty($_POST["adresse_1"])){
+				$adresse_vide=1;
+			}
+			if(empty($_POST["ville"])){
+				$ville_vide=1;
+			}
+			if(empty($_POST["num"])){
+				$num_vide=1;
+			}
+			if($code_p_vide==0&&$adresse_vide==0&&$ville_vide==0&&$num_vide==0){
+				try
+				{
+					$bdd = new PDO('mysql:host=localhost:3308;dbname=projetpiscine;charset=utf8', 'root', '');
+				}
+				catch (Exception $e)
+				{
+				        die('Erreur : ' . $e->getMessage());
+				}
+				$reponse=$bdd->query("SELECT Email_ECE,Nom_vendeur,Prenom_vendeur,Password
+										FROM vendeur							
+										") or die(print_r($bdd->errorInfo()));
+				while($donnees=$reponse->fetch()){
+					if($donnees['Email_ECE']==$_POST['email']){
+						$nom=$donnees['Nom_vendeur'];
+						$prenom=$donnees['Prenom_vendeur'];
+						$mdp=$donnees['Password'];
+					}
+				}
 
-			}
-		}
-		$reponse->closeCursor();
-		$reponse_2=$bdd->query("SELECT *
-								FROM vendeur							
-							") or die(print_r($bdd->errorInfo()));
-		while($donnees_2=$reponse_2->fetch()){
-			if(($donnees_2['Email_ECE']==$_GET['email'])&&($type=="acheteur")){
-				$type="acheteur_vendeur";
-			}
-			if(($donnees_2['Email_ECE']==$_GET['email'])&&($type=="vendeur")){
-				echo  '<table><tr><td>Nom: '.$donnees_2["Nom_vendeur"].'</td></tr><tr><td>Prenom: '.$donnees_2["Prenom_vendeur"].'</td></tr><tr><td>Email :'.$donnees_2["Email_ECE"].'</td></tr></table>';
+				$reponse->closeCursor();
+				$bdd->query("INSERT INTO acheteur
+							VALUES (NULL,'{$_POST['email']}','$nom','$prenom','{$_POST['adresse_1']}','{$_POST['adresse_2']}','{$_POST['ville']}','{$_POST['code_p']}','{$_POST['pays']}','$mdp','{$_POST['num']}');"
+									) or die(print_r($bdd->errorInfo()));
+				
+				header('Location:http://localhost/Projet_piscine/Votre%20compte/vendeur_inscrit.html');
+				exit();
 
-			}
+				}
 		}
-		$reponse_2->closeCursor();
-	 if($type=="vendeur"){
-	 	echo '<form method="POST" action="Information_compte_paiement.php"><input type="hidden" name="email" value="'.$_GET["email"].'" /></form>Voulez-vous acheter des articles sur notre site?<input type="checkbox" name="souhait_acheteur" id="souhait_acheteur"/>';
 	 ?>
 	 <form method="POST" action="verification_acheteur.php"/>
 	 	<table>
@@ -309,75 +266,60 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="number" id="code_p" name="code_p" placeholder="Code postal" style="visibility:hidden;"/>
+					<input type="number" id="code_p" name="code_p" placeholder="Code postal" />
+					<?php 
+						if($code_p_vide==1){
+							echo '<td>Veuillez saisir un code Postal</td>';
+						}
+
+					 ?>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="text" name="adresse_1" id="adresse_1" placeholder="Adresse numéro 1" style="visibility:hidden;"/>
+					<input type="text" name="adresse_1" id="adresse_1" placeholder="Adresse numéro 1" />
+					<?php 
+						if($adresse_vide==1){
+							echo '<td>Veuillez saisir une adresse</td>';
+						}
+
+					 ?>
 				</td>
 			</tr>
 			<tr>
-				<td id="td_adresse_2" style="visibility:hidden;">
+				<td id="td_adresse_2" >
 					<input type="text" name="adresse_2" id="adresse_2" placeholder="Adresse numéro 2"/>
 					(Facultatif)
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="text" name="ville" id="ville" placeholder="Ville" style="visibility:hidden;"/>
+					<input type="text" name="ville" id="ville" placeholder="Ville" />
+					<?php 
+						if($ville_vide==1){
+							echo '<td>Veuillez saisir un nom de ville</td>';
+						}
+
+					 ?>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="tel" name="num" id="num" placeholder="Numéro de téléphone" style="visibility:hidden;"/>
+					<input type="tel" name="num" id="num" placeholder="Numéro de téléphone" />
+					<?php 
+						if($num_vide==1){
+							echo '<td>Veuillez saisir un numéro de téléphone</td>';
+						}
+					 ?>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="text" name="email" id="email" value="<?php echo $_GET["email"];?>" style="visibility:hidden;"/>
+					<input type="text" name="email" id="email" value="<?php echo $_POST["email"]?>" style="visibility:hidden;"/>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="Valider"  id="valider" name="valider" style="visibility:hidden"/>
+		<input type="submit" value="Valider" name="valider" />
 	</form>
-	 <?php
-	 }
-	 if($type=="acheteur"){
-	 	echo'<form method="POST" action="Information_compte_paiement.php">Si vous voulez connaitre vos informations de paiement, saisissez votre mot de passe:<input type="password" name="mdp"id="mdp" /><input type="submit" name="validation" value="Voir mes informations"/><input type="hidden" name="email" value="'.$_GET["email"].'" /></form>Voulez-vous devenir vendeur ?<input type="checkbox" name="souhait_vendeur" id="souhait_vendeur"/>';
-
-	 	?>
-	 <form action="verification_vendeur.php" method="POST" enctype="multipart/form-data"/>
-	 	<table>
-	 		<tr>
-				<td>
-					<input type="file"  id="photo_profil" accept="image/png,image/jpeg" name="photo_profil" style="visibility:hidden;"/>
-				</td>
-			</tr>
-				<td>
-					<input type="file" id="image_fond" accept="image/png,image/jpeg" name="image_fond" style="visibility:hidden;"/>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" style="visibility:hidden;"/>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="text" name="email" id="email" value="<?php echo $_GET["email"]?>" style="visibility:hidden;"/>
-				</td>
-			</tr>
-	 	</table>
-	 	<input type="submit" id ="valider" value="Valider" name="valider" style="visibility:hidden"/>
-	 </form>
-	 
-	 <?php 
-	}
-	 	if($type=="acheteur_vendeur"){
-	 		echo'<form method="POST" action="Information_compte_paiement.php">Si vous voulez connaitre vos informations de paiement, saisissez votre mot de passe:<input type="password" name="mdp"id="mdp" /><input type="submit" name="validation" value="Voir mes informations"/><input type="hidden" name="email" value="'.$_GET["email"].'" /></form>';
-	 	}
-	  ?>
-	
 </body>
 </html>

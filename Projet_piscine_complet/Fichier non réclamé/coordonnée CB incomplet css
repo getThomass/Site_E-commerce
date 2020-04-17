@@ -1,0 +1,33 @@
+# PROJET-PISCINE
+Création d'un site web de E-commerce
+
+h1{
+
+	background-color: #ccc;
+	text-align: center;
+	width: 100%;
+
+}
+
+.header{
+background-image:url('piledor.png');
+background-size: cover;
+background-position: center;
+ position:relative;
+}
+
+
+form{
+	width: 350px;
+	text-align: justify;
+	margin: auto;
+	border: 3px solid black;
+	background-color: #FDF1B8;
+	color:#000000;
+}
+
+
+legend{
+	font-style: italic;
+	font-size:2em;
+}

@@ -1,0 +1,94 @@
+# PROJET-PISCINE
+Création d'un site web de E-commerce
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+       <link rel="stylesheet" type="text/css" href="stylepaiement.css">
+
+        <title>Validation des achats</title>
+    </head>
+<!--https://openclassrooms.com/fr/courses/1603881-apprenez-a-creer-votre-site-web-avec-html5-et-css3/1607171-creez-des-formulaires -->
+    
+	<nav>
+		<h1>Félicitations ! </h1>
+	</nav>
+
+    	
+
+
+    
+
+
+    <body>
+    	<header class="page-header header container-fluid">
+    		
+    			<script type="text/javascript">
+		    	 $(document).ready(function()
+				{$('.header').height($(window).height());});
+				</script>
+    	<form method="post" action="traitement.php"> <!-- création du formulaire-->
+
+    		<fieldset> <!-- regroupe tout le formulaire dans un seul cadre-->
+    		
+	    			
+	    				<Legend> Valider vos achats</Legend>
+	    		
+
+		    		<p>
+		    			<label for="pseudo"> Nom du titulaire: </label>
+		    			<input type="text" name="nom" id="pseudo" placeholder="M.Dupont" autofocus required />
+		             </p>  
+		             <br/>
+		             
+		             <p> 
+		    			<label for="typeCB"> Sélectionner votre moyen de paiement: </label>
+		    			<select name="CB" id="typeCB">
+		    				<option value="VISA"> VISA</option>
+		    				<option value="Mastercard"> Mastercard</option>
+		    				<option value="Paysafecard"> Paysafecard</option>
+		    				<option value="Paysafecard"> Paypal</option>
+
+		    			</select>
+					</p> 
+					<br/>
+		             
+					
+					<p>  
+		             	<label for="password"> Numéro de carte: </label>
+		    			<input type="password" name="mdp" id="password" placeholder="5843 7221 6972 6439" max="16" required/>
+		    		</p>
+		    		<br/>
+		             
+	    			
+
+	    			<!-- date avec le jour, il faudra essayer de trouver comment sélectionner uniquement le mois et l'année-->
+	    			<p>
+	    				<label for="date"> Date d'expiration </label> 
+	    				<input type="date" name="expiration" id="date" required/>
+					</p>
+					<br/>
+		             
+
+
+					<p>
+						<label for="secu"> Code de sécurité: </label>
+						<input type="password" name="securite" id="secu" placeholder="931" required/>
+					</p>
+					<br/>
+		             
+
+					<p>
+						<input type="submit" value="Valider"/>
+					</p>
+			</fieldset>
+
+
+    	</form>
+
+    </header>
+    
+    </body>
+</html>

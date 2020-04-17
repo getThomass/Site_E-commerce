@@ -137,6 +137,7 @@
 
 			
 			if($mail_vide==0&&$erreur_mail==0&&$nom_vide==0&&$prenom_vide==0&&$mdp_vide==0&&$confirm_mdp_vide==0&&$erreur_confirm_mdp==0&&$photo_profil_vide==0&&$fond_vide==0&&$pseudo_vide==0&&$erreur_pseudo==0&&$code_p_vide==0&&$adresse_vide==0&&$ville_vide==0&&$num_vide==0){
+				$chemin=getcwd();
 				try
 				{
 					$bdd = new PDO('mysql:host=localhost;dbname=projetpiscine;charset=utf8', 'root', '');
@@ -161,6 +162,10 @@
 					$tmp_fond=$_FILES["image_fond"]["tmp_name"];
 					move_uploaded_file($tmp_photo,"Photo_vendeur/".$name_photo);
 					move_uploaded_file($tmp_fond,"Fond_vendeur/".$name_fond);	
+					copy($chemin."\Photo_vendeur\\".$name_photo,str_replace("Connexion_Inscription","Vente\\",$chemin)."Photo_vendeur\\".$name_photo);
+					copy($chemin."\Fond_vendeur\\".$name_fond,str_replace("Connexion_Inscription","Vente\\",$chemin)."Fond_vendeur\\".$name_fond);
+					
+
 				}
 				else{
 					$bdd->query("INSERT INTO vendeur
@@ -173,11 +178,13 @@
 					$tmp_photo=$_FILES["photo_profil"]["tmp_name"];
 					$name_fond=$_FILES["image_fond"]["name"];
 					$tmp_fond=$_FILES["image_fond"]["tmp_name"];
-					move_uploaded_file($tmp_photo,"Photo_vendeur/".$name_photo);
-					move_uploaded_file($tmp_fond,"Fond_vendeur/".$name_fond);	
+					move_uploaded_file($tmp_photo, "Photo_vendeur/".$name_photo);
+					move_uploaded_file($tmp_fond,"Fond_vendeur/".$name_fond);
+					copy($chemin."\Photo_vendeur\\".$name_photo,str_replace("Connexion_Inscription","Vente\\",$chemin)."Photo_vendeur\\".$name_photo);
+					copy($chemin."\Fond_vendeur\\".$name_fond,str_replace("Connexion_Inscription","Vente\\",$chemin)."Fond_vendeur\\".$name_fond);
 				}				
-				header('Location:http://localhost/Projet_piscine_complet/Menu_principal/pagedegarde.php?email='.$_POST["email"]);
-				exit();
+				/*header('Location:http://localhost/Projet_piscine_complet/Menu_principal/pagedegarde.php?email='.$_POST["email"]);
+				exit();*/
 			}
 			
 	}		

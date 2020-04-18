@@ -29,7 +29,7 @@ Création d'un site web de E-commerce
 	 						<ul class="deroule">
 	 							<li><a href="http://localhost/piscine/tresor.php">Trésor ou Ferraille</a></li>
 	 							<li><a href="http://localhost/piscine/musee.php">Bon pour le musée</a></li>
-	 							<li><a href="http://localhost/piscine/vip.php">Accesoire VIP</a></li>
+	 							<li><a href="http://localhost/piscine/vip.php">Accesoires VIP</a></li>
 	 						</ul>
 
 

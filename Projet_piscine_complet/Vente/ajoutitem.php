@@ -34,7 +34,7 @@ while($donnees=$result->fetch()){
 $result->closeCursor();
 
 $file = $_FILES["image"];
-move_uploaded_file($file["tmp_name"], "photos/" . $file["name"]);
+move_uploaded_file($file["tmp_name"], "http://localhost/item/photos/" . $file["name"]);
 $nom_image = $_FILES["image"]["name"];
 
 

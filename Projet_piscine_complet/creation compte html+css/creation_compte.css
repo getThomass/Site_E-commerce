@@ -1,0 +1,53 @@
+body{
+	background: url('image.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.container{
+	width: 600px;
+	height: 1900px;
+	margin-top: 220px;
+	margin-left: 720px;
+	margin-bottom: 100px;
+	background-color: #6e3300;
+	border-radius: 15px;
+	text-align: center;
+	border: 6px #FFD700 solid;
+	font-size: 1.5em;
+
+}
+
+
+.block{
+
+		width: 250px;
+		height: 100px;
+		text-align: center;
+		margin-left: 400px;
+		margin-top: 10px;
+		
+}
+
+.cali{
+	color: #000;
+
+}
+
+
+td, tr {
+	color: #000;
+}
+
+.deroule { 
+		width: 250px;
+		height: 150px;
+		margin-left: 400px;
+
+
+ }
+ td h1
+ {
+ 	margin-left: 430px;
+ }
+

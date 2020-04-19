@@ -142,6 +142,23 @@ Création d'un site web de E-commerce
 							$reponse->closeCursor(); // Termine le traitement de la requête
 
 							?>
+		<footer class="page-footer">
+	 		<div class="container">
+	 				<div class="col-lg-8 col-md-8 col-sm-12">
+	 					<h6 class="text-uppercase font-weight-bold">En savoir plus...</h6>
+	 					<p>Actuellement en 3éme année au sein de l'ECE et passioné d'art. Nous vous proposons une plateforme gratuite dédié à la vente et l'achat d'oeuvre d'art. </p>
+	 					<p>N'hésitez pas à nous contacter pour plus d'informations diverses ! </p>
+	 				</div>
+	 				<div class="col-lg-4 col-md-4 col-sm-12">
+	 					<h6 class="text-uppercase font-weight-bold">Contact</h6>
+	 					<p>37, quai de Grenelle, 75015 Paris, France <br>
+	 						 ofcardpaul@gmail.com <br>
+	 						 val95ccc@gmail.com<br>
+	 						 totodelite94@gmail.com</p>
+	 				</div>
+	 				<div class="footer-copyright text-center">&copy; 2020 Copyright | Droit d'auteur: EbayECE.ece.fr</div>
+	 			</footer>
+
 
     </body>
 </html>

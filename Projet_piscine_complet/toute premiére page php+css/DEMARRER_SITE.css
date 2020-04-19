@@ -68,12 +68,12 @@ a:hover{
 .cust{
 	position: absolute;
 	background: #FFD700;
-	margin-left: 58px;
+	margin-right: 18px;
 	margin-top: 1px;
 	width: 44px;
 	height: 36px;
-	padding-top: 10px;
-	border: 2.6px solid #FFD700 ;
+	padding-top: 8px;
+	border: 1px solid #FFD700 ;
 
 }
 
